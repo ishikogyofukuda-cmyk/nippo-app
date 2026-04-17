@@ -38,7 +38,7 @@
   .note-box { margin-top: 8px; font-size: 12px; color: #555; background: #fffde7; border-radius: 6px; padding: 6px 8px; }
   .del-btn { border: none; background: none; color: #ccc; cursor: pointer; font-size: 18px; }
   .empty { text-align: center; color: #aaa; padding: 40px; }
-  textarea { height: 70px; resize: vertical; }
+  .hint { font-size: 11px; color: #888; margin-bottom: 4px; line-height: 1.4; background: #f0f4ff; border-left: 3px solid #1a6fd4; padding: 4px 8px; border-radius: 0 4px 4px 0; }
 </style>
 </head>
 <body>
@@ -63,11 +63,26 @@
       <label>⚙️ 工程 *</label>
       <select id="process">
         <option value="">選択してください</option>
-        <option>工程A</option>
-        <option>工程B</option>
-        <option>工程C</option>
-        <option>工程D</option>
-        <option>工程E</option>
+          <option>気密(パナソニック)</option>
+        <option>気密(サンデン)</option>
+        <option>気密(He)</option>
+        <option>大型溶接</option>
+        <option>中型溶接</option>
+        <option>AFライン(液圧)</option>
+        <option>AFライン(完成)</option>
+        <option>2.5拡管</option>
+        <option>3分小型拡管</option>
+        <option>3分大型拡管</option>
+        <option>4分拡管</option>
+        <option>5分拡管</option>
+        <option>熱風乾燥</option>
+        <option>φ7.94(パナ)</option>
+        <option>φ7.94(サンデン)</option>
+        <option>φ5(縦型・ポータブル)</option>
+        <option>日立(φ5・φ7.94)</option>
+        <option>サンデン中型(φ7.94・φ9.52)</option>
+        <option>サンデン大型(φ12.7)</option>
+        <option>Yライン</option>
       </select>
 
       <div class="row">
@@ -79,30 +94,35 @@
       <div class="section-title">詳細</div>
 
       <label>🌙 残業</label>
+      <div class="hint">人数と人数のトータル時間を記入　例：3人、4時間（内訳：1人=2時間、2人=1時間など）</div>
       <div class="pair">
         <div><input type="number" id="overtime_staff" value="0" min="0" placeholder="人数"></div>
         <div><input type="number" id="overtime_hours" value="0" min="0" step="0.5" placeholder="時間(h)"></div>
       </div>
 
       <label>🤝 応援受け入れ</label>
+      <div class="hint">応援を受け入れた人数と時間　※記入方法は残業時間と同じ</div>
       <div class="pair">
         <div><input type="number" id="support_in_staff" value="0" min="0" placeholder="人数"></div>
         <div><input type="number" id="support_in_hours" value="0" min="0" step="0.5" placeholder="時間(h)"></div>
       </div>
 
       <label>➡️ 応援出し</label>
+      <div class="hint">応援に出した人数と時間　※記入方法は残業時間と同じ</div>
       <div class="pair">
         <div><input type="number" id="support_out_staff" value="0" min="0" placeholder="人数"></div>
         <div><input type="number" id="support_out_hours" value="0" min="0" step="0.5" placeholder="時間(h)"></div>
       </div>
 
       <label>⏸ 停止</label>
+      <div class="hint">停止していた人数と時間　※記入方法は残業時間と同じ</div>
       <div class="pair">
         <div><input type="number" id="stop_staff" value="0" min="0" placeholder="人数"></div>
         <div><input type="number" id="stop_hours" value="0" min="0" step="0.5" placeholder="時間(h)"></div>
       </div>
 
       <label>📝 備考</label>
+      <div class="hint">報告内容、その他</div>
       <textarea id="note" placeholder="コメントを入力..."></textarea>
 
       <button class="btn" id="submit-btn" onclick="submitForm()">登録する</button>
@@ -118,7 +138,7 @@
 </div>
 
 <script>
-const GAS_URL = "https://script.google.com/macros/s/AKfycbzKUrk_ITe4oJXsZu3axaoodcGHqUgGAMrh7lpgLSk5_CExwANA1usGNzMi839wiphL/exec";
+const GAS_URL = "https://script.google.com/macros/s/AKfycbykYgvplq7fFvCY0koM24oZdHhRGHUm51_lf7PrHqektZAYillw_kpuZNpmNLhAPf4M/exec";
 let records = [];
 
 // 今日の日付をセット
@@ -174,11 +194,11 @@ async function submitForm() {
 
   try {
     await fetch(GAS_URL, {
-  method: "POST",
-  mode: "no-cors",
-  headers: { "Content-Type": "text/plain" },
-  body: JSON.stringify(data),
-});
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify(data),
+    });
     records.unshift(data);
     msg.innerHTML = '<div class="msg-ok">✅ スプレッドシートに送信しました！</div>';
     resetForm(data.date, data.process);
