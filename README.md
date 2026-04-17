@@ -118,7 +118,7 @@
 </div>
 
 <script>
-const GAS_URL = "https://script.google.com/macros/s/AKfycbyUeNIHLpYEFUKOhqzruFb8KHSqlBUwIIJfCegHUsi0-a4te-zb05AjR0CmCp0ZUW-S/exec";
+const GAS_URL = "https://script.google.com/macros/s/AKfycbzKUrk_ITe4oJXsZu3axaoodcGHqUgGAMrh7lpgLSk5_CExwANA1usGNzMi839wiphL/exec";
 let records = [];
 
 // 今日の日付をセット
